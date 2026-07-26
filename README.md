@@ -18,6 +18,8 @@ or a storage destination.
 dotnet add package Megaraz.ResultPattern.Infrastructure
 ```
 
+This package requires `Megaraz.ResultPattern` 0.2.2 or later.
+
 ## Database errors
 
 `DatabaseError` is an `ErrorType.External` error with a database-specific
@@ -51,7 +53,19 @@ Available classifications are:
 - `UnexpectedFailure`
 
 Use `DatabaseError.Custom` for a deliberate application-specific database
-classification.
+classification. When an application owns its error-code contract, pass an
+`ErrorCode` to preserve the exact stable code rather than adopting a package
+convention:
+
+```csharp
+var error = DatabaseError.Custom(
+    ErrorCode.From("storage.replica.unavailable"),
+    "The selected replica is unavailable.",
+    userMessage: "Storage is temporarily unavailable.");
+```
+
+The caller-owned code is a compatibility-sensitive application contract. Keep
+its meaning stable after publishing it to clients or integrations.
 
 ### Safe messages and diagnostics
 

@@ -54,9 +54,32 @@ public class DatabaseErrorTests
     }
 
     [Fact]
+    public void CustomWithCallerOwnedCodePreservesTheExactStableCode()
+    {
+        var exception = new InvalidOperationException("Sensitive database detail");
+
+        var error = DatabaseError.Custom(
+            ErrorCode.From("storage.replica.unavailable"),
+            "The selected replica is unavailable.",
+            "Storage is temporarily unavailable.",
+            exception);
+
+        Assert.Equal("storage.replica.unavailable", error.Code);
+        Assert.Equal(DatabaseErrorType.Custom, error.DatabaseErrorType);
+        Assert.Equal(ErrorType.External, error.Type);
+        Assert.Equal("The selected replica is unavailable.", error.Description);
+        Assert.Equal("Storage is temporarily unavailable.", error.UserMessage);
+        Assert.Same(exception, error.Exception);
+    }
+
+    [Fact]
     public void FactoriesRejectNullContexts()
     {
-        Assert.Throws<ArgumentNullException>(() => DatabaseError.Custom(null!, "detail"));
+        ErrorContext nullContext = null!;
+        ErrorCode nullCode = null!;
+
+        Assert.Throws<ArgumentNullException>(() => DatabaseError.Custom(nullContext, "detail"));
+        Assert.Throws<ArgumentNullException>(() => DatabaseError.Custom(nullCode, "detail"));
         Assert.Throws<ArgumentNullException>(() => DatabaseError.SaveChangesFailure(null!));
         Assert.Throws<ArgumentNullException>(() => DatabaseError.ConcurrencyFailure(null!));
         Assert.Throws<ArgumentNullException>(() => DatabaseError.QueryFailure(null!));
@@ -69,6 +92,7 @@ public class DatabaseErrorTests
     public void CustomRejectsBlankDescriptions(string description)
     {
         Assert.Throws<ArgumentException>(() => DatabaseError.Custom(TestData.Context, description));
+        Assert.Throws<ArgumentException>(() => DatabaseError.Custom(ErrorCode.From("storage.failure"), description));
     }
 
     [Fact]
