@@ -1,4 +1,3 @@
-using Megaraz.ResultPattern;
 
 namespace Megaraz.ResultPattern.Infrastructure.Tests;
 
