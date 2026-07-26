@@ -78,6 +78,9 @@ jobs:
 
       - name: Verify Source Link symbols
         shell: pwsh
+        env:
+          SOURCE_LINK_USERNAME: ${{ github.actor }}
+          SOURCE_LINK_PASSWORD: ${{ github.token }}
         run: |
           $symbolDirectory = Join-Path $env:RUNNER_TEMP "Megaraz.ResultPattern.Infrastructure-symbols"
           try {
@@ -85,7 +88,7 @@ jobs:
             [System.IO.Compression.ZipFile]::ExtractToDirectory(
               (Resolve-Path artifacts/Megaraz.ResultPattern.Infrastructure.*.snupkg),
               $symbolDirectory)
-            ./.github/scripts/verify-sourcelink-symbols.ps1 -SymbolDirectory $symbolDirectory -SourceLinkExecutable ./.tools/sourcelink
+            ./.github/scripts/verify-sourcelink-symbols.ps1 -SymbolDirectory $symbolDirectory -SourceLinkExecutable ./.tools/sourcelink -SourceLinkUsername $env:SOURCE_LINK_USERNAME -SourceLinkPassword $env:SOURCE_LINK_PASSWORD
           }
           finally {
             Remove-Item -LiteralPath $symbolDirectory -Recurse -Force -ErrorAction SilentlyContinue

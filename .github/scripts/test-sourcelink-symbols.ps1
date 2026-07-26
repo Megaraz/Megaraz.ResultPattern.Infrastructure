@@ -15,13 +15,14 @@ try {
     New-Item -ItemType File -Path (Join-Path $passingDirectory "Megaraz.ResultPattern.Infrastructure.pdb") | Out-Null
     @"
 param([string] `$Command, [string] `$Path)
-Add-Content -LiteralPath '$invocationLog' -Value `$Path
+Add-Content -LiteralPath '$invocationLog' -Value "`$Path|`$(`$args -join ' ')"
 if (`$Path -notlike '*passing*') { exit 1 }
 "@ | Set-Content -LiteralPath $fakeSourceLink
-    & $powerShellExecutable -NoProfile -File $verifier -SymbolDirectory $symbolDirectory -SourceLinkExecutable $fakeSourceLink *> $null
+    & $powerShellExecutable -NoProfile -File $verifier -SymbolDirectory $symbolDirectory -SourceLinkExecutable $fakeSourceLink -SourceLinkUsername "ci" -SourceLinkPassword "token" *> $null
     if ($LASTEXITCODE -eq 0) { throw "Source Link verification unexpectedly succeeded." }
     $invocations = @(Get-Content -LiteralPath $invocationLog)
     if ($invocations.Count -ne 1 -or $invocations[0] -like '*passing*') { throw "A failing PDB was not handled immediately." }
+    if ($invocations[0] -notlike '*--use-auth Basic --username ci --password token*') { throw "Source Link authentication arguments were not forwarded." }
 }
 finally {
     if (Test-Path -LiteralPath $testRoot) { Remove-Item -LiteralPath $testRoot -Recurse -Force }
