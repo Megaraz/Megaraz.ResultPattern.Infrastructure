@@ -16,15 +16,18 @@
     <PackageProjectUrl>https://github.com/Megaraz/Megaraz.ResultPattern.Infrastructure</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>result;result-pattern;errors;infrastructure;database</PackageTags>
-    <PackageReleaseNotes>Initial public release of provider-neutral infrastructure error extensions.</PackageReleaseNotes>
+    <PackageReleaseNotes>0.1.0: Initial public release of provider-neutral infrastructure error extensions, with verified release artifacts, portable symbols, Source Link validation, and a minimum Megaraz.ResultPattern dependency of 0.2.2.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Megaraz.ResultPattern" Version="0.2.0" />
+    <PackageReference Include="Megaraz.ResultPattern" Version="0.2.2" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 

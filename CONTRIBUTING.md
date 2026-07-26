@@ -24,6 +24,8 @@ for pushes and pull requests targeting `main`.
   unless the change intentionally updates that contract.
 - Keep provider-specific dependencies out of general abstractions.
 - Add or update tests for new or changed public behavior.
+- Keep test names focused on observable behavior rather than implementation
+  details.
 - Update the README or XML documentation when public behavior changes.
 
 Before opening a pull request, run:
@@ -31,6 +33,16 @@ Before opening a pull request, run:
 ```bash
 dotnet test Megaraz.ResultPattern.Infrastructure.slnx --configuration Release
 ```
+
+## Issues and pull requests
+
+For bugs, include the expected behavior, actual behavior, relevant code, and a
+minimal reproduction when possible. For feature requests, explain the use case
+and proposed public API.
+
+Pull requests should describe what changed, why it changed, how it was tested,
+and any compatibility or public API considerations. Keep pull requests small
+and focused. All CI checks should pass before merging.
 
 ## License
 

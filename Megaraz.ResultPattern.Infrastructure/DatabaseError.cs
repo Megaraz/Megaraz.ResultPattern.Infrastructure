@@ -55,6 +55,27 @@ public sealed record DatabaseError : Error
         Create(errorContext, "DatabaseCustom", DatabaseErrorType.Custom, customDescription, userMessage,
             messageFactory, exception);
 
+    /// <summary>
+    /// Creates a caller-defined database error with a caller-owned stable code.
+    /// </summary>
+    /// <param name="code">The exact, caller-owned error code.</param>
+    /// <param name="description">Technical detail describing the failure.</param>
+    /// <param name="userMessage">Optional application-owned message safe for clients.</param>
+    /// <param name="exception">The underlying exception, when available.</param>
+    /// <returns>A caller-defined database error.</returns>
+    public static DatabaseError Custom(
+        ErrorCode code,
+        string description,
+        string? userMessage = null,
+        Exception? exception = null)
+    {
+        ArgumentNullException.ThrowIfNull(code);
+        if (string.IsNullOrWhiteSpace(description))
+            throw new ArgumentException("The description cannot be null, empty, or whitespace.", nameof(description));
+
+        return new DatabaseError(code.Code, description, DatabaseErrorType.Custom, userMessage ?? string.Empty, exception);
+    }
+
     /// <summary>Creates an error for a failure while saving changes.</summary>
     /// <param name="errorContext">The operation and entity context for the error code.</param>
     /// <param name="exception">The underlying persistence exception, when available.</param>
