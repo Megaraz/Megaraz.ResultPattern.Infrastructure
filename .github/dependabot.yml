@@ -4,3 +4,11 @@ updates:
     directory: /
     schedule:
       interval: weekly
+  - package-ecosystem: nuget
+    directory: /Megaraz.ResultPattern.Infrastructure
+    schedule:
+      interval: weekly
+  - package-ecosystem: nuget
+    directory: /Megaraz.ResultPattern.Infrastructure.Tests
+    schedule:
+      interval: weekly
