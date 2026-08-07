@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Megaraz.ResultPattern.Infrastructure</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Title>Megaraz Result Pattern Infrastructure</Title>
     <Description>Provider-neutral infrastructure error extensions for Megaraz.ResultPattern.</Description>
     <Authors>Megaraz</Authors>
@@ -16,7 +16,7 @@
     <PackageProjectUrl>https://github.com/Megaraz/Megaraz.ResultPattern.Infrastructure</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>result;result-pattern;errors;infrastructure;database</PackageTags>
-    <PackageReleaseNotes>0.1.0: Initial public release of provider-neutral infrastructure error extensions, with verified release artifacts, portable symbols, Source Link validation, and a minimum Megaraz.ResultPattern dependency of 0.2.2.</PackageReleaseNotes>
+    <PackageReleaseNotes>0.1.1: Hardened repository security with private vulnerability reporting, secret scanning push protection, Dependabot alerts and NuGet updates, dependency review, CodeQL analysis, and protected main branch checks.</PackageReleaseNotes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
